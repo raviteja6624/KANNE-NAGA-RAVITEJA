@@ -1,0 +1,148 @@
+import java.awt.*;
+import java.awt.event.*;
+import java.applet.*;
+//<applet code="Calculator" height=400 width=400 > </applet>
+
+public class Calculator extends Applet implements ActionListener
+{
+  String msg="";
+  int num1,num2,result;
+  TextField T1;
+  Button NumButtons[] = new Button[10];
+  Button Add,Sub,Mul,Div,clear,Mod,EQ;
+  char Operation;
+  Panel npanel,cpanel,spanel;
+  
+  public void init()
+  {
+   npanel=new Panel();
+   T1=new TextField(30);
+   npanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+   npanel.add(T1);
+
+
+   cpanel=new Panel();
+   cpanel.setBackground(Color.BLUE);
+   cpanel.setLayout(new GridLayout(5,5,3,3));
+   for(int i=0;i<10;i++)
+    {
+      NumButtons[i]= new Button(""+i);
+     }
+    
+   Add = new Button("+");  
+   Sub = new Button("-");
+   Mul = new Button("*");
+   Div = new Button("/");
+   Mod = new Button("%");
+   clear = new Button("clear"); 
+   EQ = new Button("="); 
+   T1.addActionListener(this);
+   for(int i=0;i<10;i++)
+      cpanel.add(NumButtons[i]);
+   cpanel.add(Add);
+   cpanel.add(Sub);
+   cpanel.add(Mul);
+   cpanel.add(Div);
+   cpanel.add(Mod);
+   cpanel.add(EQ);
+
+   spanel = new Panel();
+   spanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+   spanel.setBackground(Color.YELLOW);
+   spanel.add(clear);
+  
+   for(int i=0;i<10;i++)
+    {
+      NumButtons[i].addActionListener(this);
+     }
+   Add.addActionListener(this);
+   Sub.addActionListener(this);
+   Mul.addActionListener(this);
+   Div.addActionListener(this);  
+   Mod.addActionListener(this);
+   clear.addActionListener(this);
+   EQ.addActionListener(this);
+   
+   this.setLayout(new BorderLayout());
+   add(npanel,BorderLayout.NORTH);
+   add(cpanel,BorderLayout.CENTER);
+   add(spanel,BorderLayout.SOUTH);
+   
+  }//end of init()
+  
+  
+  public void actionPerformed(ActionEvent e)
+  {
+   String str= e.getActionCommand();
+   char ch=str.charAt(0);
+   
+   if(Character.isDigit(ch))
+    {
+     T1.setText(T1.getText() + str); 
+     }
+   else
+    {
+       if(str.equals("+"))
+        {
+          num1= Integer.parseInt(T1.getText());
+          Operation='+';
+          T1.setText("");  
+          }
+        
+       if(str.equals("-"))
+        {
+          num1= Integer.parseInt(T1.getText());
+          Operation='-';
+          T1.setText("");  
+          }
+        
+       if(str.equals("*"))
+        {
+          num1= Integer.parseInt(T1.getText());
+          Operation='*';
+          T1.setText("");          
+          }
+       
+       if(str.equals("/"))
+        {
+          num1= Integer.parseInt(T1.getText());
+          Operation='/';
+          T1.setText("");  
+          }
+       
+       if(str.equals("%"))
+        {
+          num1= Integer.parseInt(T1.getText());
+          Operation='%';
+          T1.setText("");  
+          }
+       
+       if(str.equals("="))
+        {
+          num2= Integer.parseInt(T1.getText());
+          switch(Operation)
+           {
+             case '+':
+                       result=num1+num2; break;
+             case '-':
+                       result=num1-num2; break;
+             case '*':
+                       result=num1*num2; break;
+             case '/':
+                       result=num1/num2; break;
+             case '%':
+                       result=num1%num2; break;   
+            }
+          T1.setText("" + result); 
+          }
+       
+        if(str.equals("clear"))
+         {
+          T1.setText("");
+           }  
+     } 
+  
+ 
+   }
+
+}
